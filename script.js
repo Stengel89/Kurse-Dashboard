@@ -1,21 +1,46 @@
-const kurse = [
-  { name: "Apple", kategorie: "Aktie", kurs: 195.20, waehrung: "USD" },
-  { name: "Microsoft", kategorie: "Aktie", kurs: 420.50, waehrung: "USD" },
-  { name: "EUR/USD", kategorie: "Wechselkurs", kurs: 1.08, waehrung: "USD" },
-  { name: "EUR/GBP", kategorie: "Wechselkurs", kurs: 0.85, waehrung: "GBP" }
-];
+async function ladeKurse() {
+  const response = await fetch(
+    "https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR,THB,CNY,MYR"
+  );
 
-const tabelle = document.getElementById("kursTabelle");
+  const data = await response.json();
 
-kurse.forEach(eintrag => {
-  const zeile = document.createElement("tr");
+  const tbody = document.querySelector("#data-table tbody");
+  tbody.innerHTML = "";
 
-  zeile.innerHTML = `
-    <td>${eintrag.name}</td>
-    <td>${eintrag.kategorie}</td>
-    <td>${eintrag.kurs}</td>
-    <td>${eintrag.waehrung}</td>
-  `;
+  const kurse = [
+    {
+      name: "EUR/USD",
+      value: 1 / data.rates.EUR
+    },
+    {
+      name: "USD/THB",
+      value: data.rates.THB
+    },
+    {
+      name: "USD/CNY",
+      value: data.rates.CNY
+    },
+    {
+      name: "USD/MYR",
+      value: data.rates.MYR
+    },
+    {
+      name: "EUR/CNY",
+      value: data.rates.CNY / data.rates.EUR
+    }
+  ];
 
-  tabelle.appendChild(zeile);
-});
+  kurse.forEach(kurs => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${kurs.name}</td>
+      <td>${kurs.value.toFixed(4)}</td>
+    `;
+
+    tbody.appendChild(row);
+  });
+}
+
+ladeKurse();
