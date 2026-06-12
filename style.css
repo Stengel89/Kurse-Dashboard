@@ -1,16 +1,31 @@
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
   margin: 40px;
-  background: #f4f4f4;
+}
+
+h1 {
+  color: #222;
 }
 
 table {
+  width: 100%;
+  max-width: 900px;
   border-collapse: collapse;
-  width: 60%;
   background: white;
 }
 
 th, td {
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 14px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background: #222;
+  color: white;
+}
+
+tr:hover {
+  background: #f1f1f1;
 }
