@@ -2,7 +2,7 @@ async function ladeKurse() {
   const tbody = document.querySelector("#data-table tbody");
 
   try {
-    const response = await fetch("https://api.frankfurter.app/latest?from=USD&to=EUR,THB,CNY,MYR");
+    const response = await fetch("https://api.frankfurter.dev/v1/latest?from=USD&to=EUR,THB,CNY,MYR");
 
     if (!response.ok) {
       throw new Error("API Fehler");
